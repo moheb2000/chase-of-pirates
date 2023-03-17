@@ -1,11 +1,10 @@
 function love.load()
+  Gamestate = require "libraries.hump.gamestate"
+  Timer = require "libraries.hump.timer"
 
-end
+  require "boot"
+  require "game"
 
-function love.update(dt)
-
-end
-
-function love.draw()
-
+  Gamestate.registerEvents()
+  Gamestate.switch(Boot)
 end
