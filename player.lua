@@ -1,5 +1,9 @@
 Player = Object:extend()
 
+local bulletForce = 0
+local maxBulletForce = 1000
+local mouseX, mouseY = 0, 0
+
 function Player:new()
   -- ship positions
   self.shipX = love.graphics:getWidth() - 200
@@ -22,13 +26,14 @@ end
 
 function Player:mousereleased(button)
   if button == 1 then
-    local bullet = Bullet(self.cannonX, self.cannonY, 500, self.angle + math.pi)
+    local bullet = Bullet(self.cannonX, self.cannonY, bulletForce, self.angle + math.pi)
     table.insert(BulletList, bullet)
+    bulletForce = 0
   end
 end
 
 function Player:update(dt)
-  local mouseX, mouseY = love.mouse.getPosition()
+  mouseX, mouseY = love.mouse.getPosition()
   self.angle = math.atan2(mouseY - self.cannonY, mouseX - self.cannonX) + math.pi
 
   -- ship will go up and down
@@ -42,10 +47,30 @@ function Player:update(dt)
   end
   -- We need to set cannonY here again because cannon must go up and down with ship too
   self.cannonY = self.shipY + 16 * 5
+
+  -- Get Force with mouse down for bullet
+  if love.mouse.isDown(1) then
+    bulletForce = bulletForce + 500 * dt
+    if bulletForce > maxBulletForce then
+      bulletForce = maxBulletForce
+    end
+  end
 end
 
 function Player:draw()
   love.graphics.print("Angle: " .. self.angle)
+  love.graphics.print("Force: " .. bulletForce, 0, 20)
+
+  -- Add force circle around mouse press
+  if bulletForce < maxBulletForce / 3 then
+    love.graphics.setColor(love.math.colorFromBytes(96, 186, 57))
+  elseif bulletForce < 2 * maxBulletForce / 3 then
+    love.graphics.setColor(love.math.colorFromBytes(186, 156, 57))
+  else
+    love.graphics.setColor(love.math.colorFromBytes(186, 57, 57))
+  end
+  love.graphics.circle("line", mouseX, mouseY, bulletForce * 0.04)
+  love.graphics.setColor(1, 1, 1)
 
   love.graphics.draw(self.ship, self.shipX, self.shipY, 0, 5, 5)
 
