@@ -1,26 +1,26 @@
 Game = {}
 
-local sky = love.graphics.newImage("images/sky.png")
-
-local cloud = love.graphics.newImage("images/clouds.png")
-cloud:setWrap("repeat", "repeat")
-local cloudQuad = love.graphics.newQuad(0, 0, 2880, 540, cloud:getWidth(), cloud:getHeight())
-
-local x = 0
-
+local background = Background()
 local player = Player()
 
-function Game:update(dt)
-  x = x - 10 * dt
-  if x <= -1920 then
-    x = 0
-  end
+function Game:mousereleased(x, y, button)
+  player:mousereleased(button)
+end
 
+function Game:update(dt)
+  background:update(dt)
   player:update(dt)
+
+  for _, bullet in ipairs(BulletList) do
+    bullet:update(dt)
+  end
 end
 
 function Game:draw()
-  love.graphics.draw(sky)
-  love.graphics.draw(cloud, cloudQuad, x, 0)
+  background:draw()
   player:draw()
+
+  for _, bullet in ipairs(BulletList) do
+    bullet:draw()
+  end
 end

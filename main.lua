@@ -3,6 +3,8 @@ function love.load()
   Timer = require "libraries.hump.timer"
   Object = require "libraries.classic"
 
+  require "background"
+  require "bullet"
   require "player"
 
   require "boot"

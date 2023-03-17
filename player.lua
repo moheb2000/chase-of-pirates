@@ -20,6 +20,13 @@ function Player:new()
   self.speed = 10
 end
 
+function Player:mousereleased(button)
+  if button == 1 then
+    local bullet = Bullet(self.cannonX, self.cannonY, 500, self.angle + math.pi)
+    table.insert(BulletList, bullet)
+  end
+end
+
 function Player:update(dt)
   local mouseX, mouseY = love.mouse.getPosition()
   self.angle = math.atan2(mouseY - self.cannonY, mouseX - self.cannonX) + math.pi
