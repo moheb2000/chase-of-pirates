@@ -29,7 +29,7 @@ function Help:update(dt)
     if fadeTimer == false then
       fadeTimer = true
       -- Boot screen will be in alpha 1 state in 2 seconds and after that fadeIn will be false
-      helpTimer:after(5, function() fadeIn = false end)
+      helpTimer:after(8, function() fadeIn = false end)
     end
   elseif alpha < 0 then
     alpha = 0
