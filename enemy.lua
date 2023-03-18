@@ -39,8 +39,21 @@ function Enemy:new(img, cannonPosX, cannonPosY, health, cooldown, attackSpeed)
     local bulletForce = love.math.random(minForce, maxForce)
     self.angle = -(love.math.random() * math.pi / 6 + math.pi / 6)
     local bullet = Bullet(self.cannonX, self.cannonY, bulletForce, self.angle)
-    table.insert(BulletList, bullet)
+    table.insert(EnemyBulletList, bullet)
   end)
+
+  -- collision positions
+  self.collisionLeft = self.shipX
+  self.collisionRight = self.shipX + self.ship:getWidth() * 5
+  self.collisionTop = self.shipY + 19
+  self.collisionDown = self.shipY + self.ship:getHeight() * 5
+end
+
+function Enemy:getHit()
+  self.health = self.health - 10
+  if self.health < 0 then
+    self.health = 0
+  end
 end
 
 function Enemy:update(dt)
@@ -60,6 +73,13 @@ function Enemy:update(dt)
 
   -- Ship has x direction speed
   self.shipX = self.shipX + self.attackSpeed * dt
+
+  -- collision positions must update every frame
+  -- collision positions
+  self.collisionLeft = self.shipX
+  self.collisionRight = self.shipX + self.ship:getWidth() * 5
+  self.collisionTop = self.shipY + 19
+  self.collisionDown = self.shipY + self.ship:getHeight() * 5
 end
 
 function Enemy:draw()
@@ -68,4 +88,12 @@ function Enemy:draw()
   -- We set x and y origin to the middle of cannon to rotate it properly
   love.graphics.draw(self.cannon, self.cannonX, self.cannonY, self.angle + math.pi, 5, 5, self.cannon:getWidth() / 2,
     self.cannon:getHeight() / 2)
+
+  -- draw health bar
+  if self.health < 100 then
+    love.graphics.setColor(love.math.colorFromBytes(252, 66, 63))
+    love.graphics.rectangle("line", self.shipX, self.shipY - 50, self.ship:getWidth() * 5, 20)
+    love.graphics.rectangle("fill", self.shipX, self.shipY - 50, self.ship:getWidth() * 5 * self.health / 100, 20)
+    love.graphics.setColor(1, 1, 1)
+  end
 end

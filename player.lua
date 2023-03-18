@@ -22,12 +22,27 @@ function Player:new()
   self.angle = 0
 
   self.speed = 10
+
+  self.health = 100
+
+  -- collision positions
+  self.collisionLeft = self.shipX
+  self.collisionRight = self.shipX + self.ship:getWidth() * 5
+  self.collisionTop = self.shipY + 19
+  self.collisionDown = self.shipY + self.ship:getHeight() * 5
+end
+
+function Player:getHit()
+  self.health = self.health - 10
+  if self.health < 0 then
+    self.health = 0
+  end
 end
 
 function Player:mousereleased(button)
   if button == 1 then
     local bullet = Bullet(self.cannonX, self.cannonY, bulletForce, self.angle + math.pi)
-    table.insert(BulletList, bullet)
+    table.insert(PlayerBulletList, bullet)
     bulletForce = 0
   end
 end
@@ -69,7 +84,7 @@ function Player:draw()
   else
     love.graphics.setColor(love.math.colorFromBytes(186, 57, 57))
   end
-  love.graphics.circle("line", mouseX, mouseY, bulletForce * 0.04)
+  love.graphics.circle("fill", mouseX, mouseY, bulletForce * 0.04)
   love.graphics.setColor(1, 1, 1)
 
   love.graphics.draw(self.ship, self.shipX, self.shipY, 0, 5, 5)
@@ -77,4 +92,12 @@ function Player:draw()
   -- We set x and y origin to the middle of cannon to rotate it properly
   love.graphics.draw(self.cannon, self.cannonX, self.cannonY, self.angle, 5, 5, self.cannon:getWidth() / 2,
   self.cannon:getHeight() / 2)
+
+  -- draw health bar
+  if self.health < 100 then
+    love.graphics.setColor(love.math.colorFromBytes(252, 66, 63))
+    love.graphics.rectangle("line", self.shipX, self.shipY - 50, self.ship:getWidth() * 5, 20)
+    love.graphics.rectangle("fill", self.shipX, self.shipY - 50, self.ship:getWidth() * 5 * self.health / 100, 20)
+    love.graphics.setColor(1, 1, 1)
+  end
 end
