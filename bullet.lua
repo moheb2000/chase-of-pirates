@@ -35,6 +35,16 @@ function Bullet:update(dt, windForce)
   self.gravityForce = self.gravityForce + self.gravity
   self.x = self.x + self.force * math.cos(self.angle) * dt - (windForce - 10) * 10 * dt
   self.y = self.y + self.force * math.sin(self.angle) * dt + self.gravityForce * dt
+
+  -- clean up bullets: if bullet go outside of window
+  local r = 10
+  if self.x + r <= 0 or
+      self.x - r >= love.graphics:getWidth() then
+    self.dead = true
+  end
+  if self.y + r >= love.graphics:getHeight() - 32 then
+    self.dead = true
+  end
 end
 
 function Bullet:draw()
