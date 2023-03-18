@@ -8,6 +8,9 @@ function love.load()
   ButtonSound = love.audio.newSource("sounds/button.wav", "static")
   BulletSea = love.audio.newSource("sounds/cannon_miss.ogg", "static")
 
+  Music = love.audio.newSource("sounds/music.wav", "stream")
+  Music:setLooping(true)
+
   require "background"
   require "bullet"
   require "player"

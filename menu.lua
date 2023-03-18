@@ -11,6 +11,10 @@ local alpha = 0
 local startText = "Start"
 local quitText = "Quit"
 
+function Menu:init()
+  Music:play()
+end
+
 function Menu:mousereleased(_, y, button)
   if button == 1 then
     local mouseY = y
