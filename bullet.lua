@@ -11,6 +11,8 @@ function Bullet:new(originX, originY, force, angle)
   self.gravity = 10
   self.gravityForce = 0
   self.dead = false
+
+  CannonSound:play()
 end
 
 function Bullet:checkCollision(b_left, b_right, b_top, b_bottom)
@@ -25,6 +27,7 @@ function Bullet:checkCollision(b_left, b_right, b_top, b_bottom)
       and a_bottom > b_top
       and a_top < b_bottom then
     self.dead = true
+    HitSound:play()
     return true
   end
 
@@ -43,6 +46,7 @@ function Bullet:update(dt, windForce)
     self.dead = true
   end
   if self.y + r >= love.graphics:getHeight() - 32 then
+    BulletSea:play()
     self.dead = true
   end
 end

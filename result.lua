@@ -25,8 +25,10 @@ function Result:mousereleased(_, y, button)
     local mouseY = y
     if mouseY > love.graphics.getHeight() * 0.5 and mouseY < love.graphics.getHeight() * 0.6 then
       love.mouse.setCursor()
+      ButtonSound:play()
       Gamestate.push(Game)
     elseif mouseY > love.graphics.getHeight() * 0.7 and mouseY < love.graphics.getHeight() * 0.8 then
+      ButtonSound:play()
       Gamestate.pop()
     end
   end
