@@ -1,6 +1,7 @@
 Player = Object:extend()
 
 local bulletForce = 0
+local cooldownForce = 0
 local maxBulletForce = 1000
 local mouseX, mouseY = 0, 0
 
@@ -18,6 +19,8 @@ function Player:new()
 
   self.cannon = love.graphics.newImage("images/cannon.png")
   self.cannon:setFilter("nearest", "nearest")
+
+  self.isCannonReady = true
 
   self.angle = 0
 
@@ -41,10 +44,12 @@ function Player:getHit()
 end
 
 function Player:mousereleased(button)
-  if button == 1 then
+  if button == 1 and self.isCannonReady then
     local bullet = Bullet(self.cannonX, self.cannonY, bulletForce, self.angle + math.pi)
     table.insert(PlayerBulletList, bullet)
+    cooldownForce = bulletForce
     bulletForce = 0
+    self.isCannonReady = false
   end
 end
 
@@ -65,10 +70,19 @@ function Player:update(dt)
   self.cannonY = self.shipY + 16 * 5
 
   -- Get Force with mouse down for bullet
-  if love.mouse.isDown(1) then
+  if love.mouse.isDown(1) and self.isCannonReady then
     bulletForce = bulletForce + 500 * dt
     if bulletForce > maxBulletForce then
       bulletForce = maxBulletForce
+    end
+  end
+
+  -- cooldown logic
+  if self.isCannonReady == false then
+    cooldownForce = cooldownForce - 150 * dt
+    if cooldownForce <= 0 then
+      cooldownForce = 0
+      self.isCannonReady = true
     end
   end
 end
@@ -88,11 +102,24 @@ function Player:draw()
   love.graphics.circle("fill", mouseX, mouseY, bulletForce * 0.04)
   love.graphics.setColor(1, 1, 1)
 
+  -- add cooldown circle
+  if self.isCannonReady == false then
+    if cooldownForce < maxBulletForce / 3 then
+      love.graphics.setColor(love.math.colorFromBytes(96, 186, 57))
+    elseif cooldownForce < 2 * maxBulletForce / 3 then
+      love.graphics.setColor(love.math.colorFromBytes(186, 156, 57))
+    else
+      love.graphics.setColor(love.math.colorFromBytes(186, 57, 57))
+    end
+    love.graphics.circle("fill", mouseX, mouseY, cooldownForce * 0.04)
+    love.graphics.setColor(1, 1, 1)
+  end
+
   love.graphics.draw(self.ship, self.shipX, self.shipY, 0, 5, 5)
 
   -- We set x and y origin to the middle of cannon to rotate it properly
   love.graphics.draw(self.cannon, self.cannonX, self.cannonY, self.angle, 5, 5, self.cannon:getWidth() / 2,
-  self.cannon:getHeight() / 2)
+    self.cannon:getHeight() / 2)
 
   -- draw health bar
   if self.health < 100 then
