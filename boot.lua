@@ -11,8 +11,10 @@ local alpha = 0
 local fadeIn = true
 local fadeTimer = false
 
+local bootTimer = Timer.new()
+
 function Boot:update(dt)
-  Timer.update(dt)
+  bootTimer:update(dt)
 
   if fadeIn then
     alpha = alpha + 1 * dt
@@ -26,7 +28,7 @@ function Boot:update(dt)
     if fadeTimer == false then
       fadeTimer = true
       -- Boot screen will be in alpha 1 state in 2 seconds and after that fadeIn will be false
-      Timer.after(2, function() fadeIn = false end)
+      bootTimer:after(2, function() fadeIn = false end)
     end
   elseif alpha < 0 then
     alpha = 0

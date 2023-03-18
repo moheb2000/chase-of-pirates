@@ -6,6 +6,7 @@ function love.load()
   require "background"
   require "bullet"
   require "player"
+  require "enemy"
 
   require "boot"
   require "game"

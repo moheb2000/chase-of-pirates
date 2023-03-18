@@ -8,6 +8,8 @@ local cloudQuad = love.graphics.newQuad(0, 0, 2880, 540, cloud:getWidth(), cloud
 
 local x = 0
 
+local ocean = love.graphics.newImage("images/ocean.png")
+
 function Background:update(dt)
   x = x - 10 * dt
   if x <= -1920 then
@@ -18,4 +20,5 @@ end
 function Background:draw()
   love.graphics.draw(sky)
   love.graphics.draw(cloud, cloudQuad, x, 0)
+  love.graphics.draw(ocean, 0, love.graphics.getHeight() - 64)
 end
