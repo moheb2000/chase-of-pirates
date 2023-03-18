@@ -31,9 +31,9 @@ function Bullet:checkCollision(b_left, b_right, b_top, b_bottom)
   return false
 end
 
-function Bullet:update(dt)
+function Bullet:update(dt, windForce)
   self.gravityForce = self.gravityForce + self.gravity
-  self.x = self.x + self.force * math.cos(self.angle) * dt
+  self.x = self.x + self.force * math.cos(self.angle) * dt - (windForce - 10) * 10 * dt
   self.y = self.y + self.force * math.sin(self.angle) * dt + self.gravityForce * dt
 end
 

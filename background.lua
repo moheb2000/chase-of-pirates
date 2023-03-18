@@ -10,8 +10,12 @@ local x = 0
 
 local ocean = love.graphics.newImage("images/ocean.png")
 
+function Background:new()
+  self.windForce = 10
+end
+
 function Background:update(dt)
-  x = x - 10 * dt
+  x = x - self.windForce * dt
   if x <= -1920 then
     x = 0
   end

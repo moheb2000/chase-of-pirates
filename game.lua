@@ -19,9 +19,10 @@ function Game:update(dt)
   enemy:update(dt)
 
   for i, bullet in ipairs(PlayerBulletList) do
-    bullet:update(dt)
+    bullet:update(dt, background.windForce)
     if bullet.dead then
       table.remove(PlayerBulletList, i)
+      background.windForce = love.math.random(0, 20)
     end
     -- check collision for enemy
     if bullet:checkCollision(enemy.collisionLeft, enemy.collisionRight, enemy.collisionTop, enemy.collisionDown) then
@@ -30,7 +31,7 @@ function Game:update(dt)
   end
 
   for i, bullet in ipairs(EnemyBulletList) do
-    bullet:update(dt)
+    bullet:update(dt, 10)
     if bullet.dead then
       table.remove(EnemyBulletList, i)
     end
