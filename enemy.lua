@@ -51,8 +51,9 @@ end
 
 function Enemy:getHit()
   self.health = self.health - 10
-  if self.health < 0 then
+  if self.health <= 0 then
     self.health = 0
+    Gamestate.switch(Result, true)
   end
 end
 

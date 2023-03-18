@@ -1,9 +1,8 @@
 Game = {}
 
-local background = Background()
-local player = Player()
-
 function Game:enter()
+  background = Background()
+  player = Player()
   enemy = Enemy("images/player-ship.png", 5, 16, 100, 5, 10)
 end
 
