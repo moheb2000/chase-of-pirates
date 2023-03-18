@@ -8,6 +8,8 @@ function love.load()
   ButtonSound = love.audio.newSource("sounds/button.wav", "static")
   BulletSea = love.audio.newSource("sounds/cannon_miss.ogg", "static")
 
+  BootMusic = love.audio.newSource("sounds/boot.ogg", "stream")
+
   Music = love.audio.newSource("sounds/music.wav", "stream")
   Music:setLooping(true)
 
@@ -17,6 +19,7 @@ function love.load()
   require "enemy"
 
   require "boot"
+  require "help"
   require "menu"
   require "game"
   require "result"
