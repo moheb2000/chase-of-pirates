@@ -52,5 +52,7 @@ function Bullet:update(dt, windForce)
 end
 
 function Bullet:draw()
+  love.graphics.setColor(0, 0, 0)
   love.graphics.circle("fill", self.x, self.y, 10)
+  love.graphics.setColor(1, 1, 1)
 end

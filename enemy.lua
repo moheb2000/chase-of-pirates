@@ -75,6 +75,11 @@ function Enemy:update(dt)
   -- Ship has x direction speed
   self.shipX = self.shipX + self.attackSpeed * dt
 
+  -- Check if two ships have collision
+  if self.shipX >= love.graphics.getWidth() - (self.ship:getWidth() * 5 + 200) then
+    Gamestate.switch(Result, false)
+  end
+
   -- collision positions must update every frame
   -- collision positions
   self.collisionLeft = self.shipX
