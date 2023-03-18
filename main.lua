@@ -9,7 +9,9 @@ function love.load()
   require "enemy"
 
   require "boot"
+  require "menu"
   require "game"
+  require "result"
 
   Gamestate.registerEvents()
   Gamestate.switch(Boot)

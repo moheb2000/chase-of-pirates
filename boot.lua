@@ -34,7 +34,7 @@ function Boot:update(dt)
     alpha = 0
     -- setColor must back to normal before switching to the next scene
     love.graphics.setColor(1, 1, 1, 1)
-    Gamestate.switch(Game)
+    Gamestate.switch(Menu)
   end
 end
 

@@ -9,6 +9,9 @@ end
 
 function Game:mousereleased(x, y, button)
   player:mousereleased(button)
+  if button == 2 then
+    Gamestate.pop()
+  end
 end
 
 function Game:update(dt)
