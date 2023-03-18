@@ -3,7 +3,7 @@ Game = {}
 function Game:enter()
   background = Background()
   player = Player()
-  enemy = Enemy("images/player-ship.png", 5, 16, 100, 5, 10)
+  enemy = Enemy("images/enemy-ship.png", 5, 16, 100, 5, 10)
 end
 
 function Game:mousereleased(x, y, button)
