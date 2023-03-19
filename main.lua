@@ -18,6 +18,7 @@ function love.load()
   require "player"
   require "enemy"
   require "drop-particle"
+  require "fire-particle"
 
   require "boot"
   require "help"

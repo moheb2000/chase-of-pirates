@@ -46,5 +46,5 @@ function Help:draw()
     logo:getHeight() / 2)
 
   love.graphics.printf("Help", font, 0, love.graphics.getHeight() * 0.2, 960, "center")
-  love.graphics.printf("You are the greatest captain of all britain army. Pirates want to destroy your ship to attack your cities!\n\nHold left key = Fire cannon\n\nright click = Back to main menu\n\nClouds will show you the wind speed", fontP, 0, love.graphics.getHeight() * 0.4, 960, "center")
+  love.graphics.printf("You are the greatest captain of all britain army. Pirates want to destroy your ship to attack your cities!\n\nHold left key = Fire cannon\n\nRight click = Back to main menu\n\nClouds will show you the wind speed", fontP, 0, love.graphics.getHeight() * 0.4, 960, "center")
 end

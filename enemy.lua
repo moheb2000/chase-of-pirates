@@ -47,6 +47,9 @@ function Enemy:new(img, cannonPosX, cannonPosY, health, cooldown, attackSpeed)
   self.collisionRight = self.shipX + self.ship:getWidth() * 5
   self.collisionTop = self.shipY + 19
   self.collisionDown = self.shipY + self.ship:getHeight() * 5
+
+  -- fire particle instance
+  self.fireParticle = FireParticle:clone()
 end
 
 function Enemy:getHit()
@@ -86,6 +89,18 @@ function Enemy:update(dt)
   self.collisionRight = self.shipX + self.ship:getWidth() * 5
   self.collisionTop = self.shipY + 19
   self.collisionDown = self.shipY + self.ship:getHeight() * 5
+
+  -- fire particle update
+  self.fireParticle:update(dt)
+  if self.health < 30 then
+    self.fireParticle:emit(64)
+    self.fireParticle:setEmissionArea("normal", 15, 15)
+  elseif self.health < 50 then
+    self.fireParticle:emit(48)
+    self.fireParticle:setEmissionArea("normal", 10, 10)
+  elseif self.health < 90 then
+    self.fireParticle:emit(32)
+  end
 end
 
 function Enemy:draw()
@@ -94,6 +109,10 @@ function Enemy:draw()
   -- We set x and y origin to the middle of cannon to rotate it properly
   love.graphics.draw(self.cannon, self.cannonX, self.cannonY, self.angle + math.pi, 5, 5, self.cannon:getWidth() / 2,
     self.cannon:getHeight() / 2)
+
+  -- fire particle draw
+  love.graphics.draw(self.fireParticle, self.shipX + self.ship:getWidth() * 5 / 2,
+    self.shipY + self.ship:getHeight() * 5 / 2 + 25)
 
   -- draw health bar
   if self.health < 100 then
