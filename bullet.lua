@@ -47,6 +47,9 @@ function Bullet:update(dt, windForce)
   end
   if self.y + r >= love.graphics:getHeight() - 32 then
     BulletSea:play()
+    DropX = self.x
+    DropY = self.y
+    DropParticle:emit(6)
     self.dead = true
   end
 end

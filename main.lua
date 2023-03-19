@@ -17,6 +17,7 @@ function love.load()
   require "bullet"
   require "player"
   require "enemy"
+  require "drop-particle"
 
   require "boot"
   require "help"

@@ -17,6 +17,8 @@ function Game:update(dt)
   background:update(dt)
   player:update(dt)
   enemy:update(dt)
+  -- update drop particle
+  DropParticle:update(dt)
 
   for i, bullet in ipairs(PlayerBulletList) do
     bullet:update(dt, background.windForce)
@@ -46,6 +48,8 @@ function Game:draw()
   background:draw()
   player:draw()
   enemy:draw()
+
+  love.graphics.draw(DropParticle, DropX, DropY)
 
   for _, bullet in ipairs(PlayerBulletList) do
     bullet:draw()
